@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Solr managed schema - automatically generated - DO NOT EDIT -->
+<schema name="smallest-config" version="1.6">
+  <uniqueKey>id</uniqueKey>
+  <fieldType name="pint" class="solr.IntPointField" docValues="true"/>
+  <fieldType name="string" class="solr.StrField" sortMissingLast="true" docValues="true"/>
+  <fieldType name="text_basic" class="solr.SortableTextField" positionIncrementGap="100">
+    <analyzer>
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+  <field name="_text_" type="text_basic" docValues="false" multiValued="true" indexed="true" stored="false"/>
+  <field name="id" type="string" indexed="true" required="true" stored="true"/>
+  <field name="links" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="linksCount" type="pint" default="0" indexed="true" stored="true"/>
+  <dynamicField name="*" type="text_basic" indexed="true" stored="true"/>
+  <copyField source="*" dest="_text_"/>
+</schema>

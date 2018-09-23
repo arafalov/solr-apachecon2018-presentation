@@ -1,0 +1,24 @@
+<dataConfig>
+    <dataSource type="URLDataSource"/>
+    <document>
+
+        <entity name="pets"
+            url="file://${solr.core.instanceDir}/../../pets/pets.xml"
+            processor="XPathEntityProcessor"
+            forEach="/response/row/row">
+
+            <field column="id"             xpath="/response/row/row/@_id" />
+            <field column="animaltype"     xpath="/response/row/row/animaltype" />
+            <field column="name"           xpath="/response/row/row/name" />
+            <field column="specificbreed"  xpath="/response/row/row/specificbreed" />
+            <field column="primarybreed"   xpath="/response/row/row/primarybreed" />
+            <field column="primarycolour"  xpath="/response/row/row/primarycolour" />
+            <field column="desexed"        xpath="/response/row/row/de_sexed" />
+            <field column="gender"         xpath="/response/row/row/gender" />
+            <field column="age"            xpath="/response/row/row/age" />
+            <field column="locality"       xpath="/response/row/row/locality" />
+
+        </entity>
+
+    </document>
+</dataConfig>

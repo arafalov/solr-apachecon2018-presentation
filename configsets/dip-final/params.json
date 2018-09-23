@@ -1,0 +1,11 @@
+{"params":{
+    "SELECT":{
+      "df":"_text_",
+      "echoParams":"all"},
+    "DIP_INDEX":{
+      "separator":"\t",
+      "rowid":"id",
+      "f.links.split":"true",
+      "f.links.separator":" ",
+      "processor":"cloneLinksToCount,countLinks",
+      "":{"v":4}}}}

@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "6620fd19-a338-4dd1-93d6-ddb50cfdbd24",
+		"name": "ApacheCon2018",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DataIsPlural",
+			"item": [
+				{
+					"name": "Facet - Average entry links",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"params\":{\n\t\t\"q\":\"*:*\",\n\t\t\"rows\":5\n\t},\n\t\"facet\":{\n\t\t\"avgLinks\": \"avg(linksCount)\",\n\t\t\"maxLinks\": \"max(linksCount)\",\n\t\t\"minLinks\": \"min(linksCount)\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://{{solr}}/solr/dip/select",
+							"protocol": "http",
+							"host": [
+								"{{solr}}"
+							],
+							"path": [
+								"solr",
+								"dip",
+								"select"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Facet - Average entry links per position",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    params:{\n        q:\"*:*\",\n        rows:1\n    },\n    facet:{\n        by_position: {\n            type: terms,\n            field: position,\n\n            facet: {\n                avgLinks: \"avg(linksCount)\",\n                maxLinks: \"max(linksCount)\",\n            }\n        }\n    }\n}\n"
+						},
+						"url": {
+							"raw": "http://{{solr}}/solr/dip/select",
+							"protocol": "http",
+							"host": [
+								"{{solr}}"
+							],
+							"path": [
+								"solr",
+								"dip",
+								"select"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set custom DIP Update Params",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"set\": {\n\t\t\"dip_update\": {\n\t\t\t\"separator\": \"%09\",\n\t\t\t\"rowid\": \"id\",\n\t\t\t\"f.links.split\": true,\n\t\t\t\"f.links.separator\": \" \",\n\t\t\t\"processor\": \"cloneLinksToCount,countLinks\"\n\t\t}\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://{{solr}}/solr/dip/config/params",
+							"protocol": "http",
+							"host": [
+								"{{solr}}"
+							],
+							"path": [
+								"solr",
+								"dip",
+								"config",
+								"params"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set default params for select handler",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"set\": {\n\t\t\"select\": {\n\t\t\t\"df\": \"_text_\",\n\t\t\t\"echoParams\": \"all\"\n\t\t}\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://{{solr}}/solr/minimalup/config/params",
+							"protocol": "http",
+							"host": [
+								"{{solr}}"
+							],
+							"path": [
+								"solr",
+								"minimalup",
+								"config",
+								"params"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Facet - entries by year",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "facet",
+									"value": "on",
+									"type": "text"
+								},
+								{
+									"key": "q",
+									"value": "*:*",
+									"type": "text"
+								},
+								{
+									"key": "rows",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "facet.query",
+									"value": "{!prefix f=edition}2014",
+									"type": "text"
+								},
+								{
+									"key": "facet.query",
+									"value": "{!prefix f=edition}2015",
+									"type": "text"
+								},
+								{
+									"key": "facet.query",
+									"value": "{!prefix f=edition}2016",
+									"type": "text"
+								},
+								{
+									"key": "facet.query",
+									"value": "{!prefix f=edition}2017",
+									"type": "text"
+								},
+								{
+									"key": "facet.query",
+									"value": "{!prefix f=edition}2018",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8983/solr/dip/select",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8983",
+							"path": [
+								"solr",
+								"dip",
+								"select"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pets - json facets",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\tquery: \"splitcolour:grey\",\n\tfilter: \"age:[0 TO 20]\"\n\tlimit: 2,\n\tfacet: {\n\t\ttype: {\n\t\t\ttype: terms,\n\t\t\tfield: animaltype,\n\t\t\tfacet : {\n\t\t\t\tavg_age: \"avg(age)\",\n\t\t\t\tbreed: {\n\t\t\t\t\ttype: terms,\n\t\t\t\t\tfield: specificbreed,\n\t\t\t\t\tlimit: 3,\n\t\t\t\t\tfacet: {\n\t\t\t\t\t\tavg_age: \"avg(age)\",\n\t\t\t\t\t\tages: {\n\t\t\t\t\t\t\ttype: range,\n\t    \t\t\t\t\tfield : age,\n\t    \t\t\t\t\tstart : 0,\n\t    \t\t\t\t\tend : 20,\n\t    \t\t\t\t\tgap : 5\n\t\t\t\t\t\t}\n    \t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8983/solr/pets/select",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8983",
+							"path": [
+								"solr",
+								"pets",
+								"select"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

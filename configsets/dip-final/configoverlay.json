@@ -1,0 +1,10 @@
+{"updateProcessor":{
+    "cloneLinksToCount":{
+      "name":"cloneLinksToCount",
+      "class":"solr.CloneFieldUpdateProcessorFactory",
+      "source":"links",
+      "dest":"linksCount"},
+    "countLinks":{
+      "name":"countLinks",
+      "class":"solr.CountFieldValuesUpdateProcessorFactory",
+      "fieldName":"linksCount"}}}
